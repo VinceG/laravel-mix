@@ -119,7 +119,8 @@ let rules = [
 
     {
         test: /\.jsx?$/,
-        exclude: /(node_modules|bower_components)/,
+        // We have to be able to compile vue-strap as it's not currenly es5 compatible 
+        exclude: /node_modules\/(?!(vue-strap)\/).*/,
         loader: 'babel-loader' + Mix.babelConfig()
     },
 
