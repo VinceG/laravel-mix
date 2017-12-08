@@ -48,13 +48,18 @@ class Mix {
     }
 
 
+    hash() {
+        return options.hash !== undefined && options.hash != '' ? options.hash : '[chunkhash]';
+    }
+
+
     /**
      * Determine the Webpack output path.
      */
     output() {
-        let filename = options.versioning ? '[name].[chunkhash].js' : '[name].js';
+        let filename = options.versioning ? `[name].${this.hash()}.js` : '[name].js';
         let chunkFilename = path.join(
-            global.entry.base || '', (options.versioning ? '[name].[chunkhash].js' : '[name].js')
+            global.entry.base || '', (options.versioning ? `[name].${this.hash()}.js` : '[name].js')
         );
 
         return {
