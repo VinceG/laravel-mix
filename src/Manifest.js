@@ -1,4 +1,4 @@
-let objectValues = require('lodash').values;
+let { values, each } = require('lodash');
 let object = require('lodash/fp/object');
 
 class Manifest {
@@ -65,7 +65,7 @@ class Manifest {
      */
     transform(stats, options) {
         let flattenedPaths = [].concat.apply(
-            [], objectValues(stats.assetsByChunkName)
+            [], values(stats.assetsByChunkName)
         );
 
         flattenedPaths.forEach(path => {
@@ -73,7 +73,7 @@ class Manifest {
 
             if (! path.startsWith('/')) path = ('/'+path);
 
-            let original = path.replace(/\.(\w{20})(\..+)/, '$2');
+            let original = path.replace(/\.(\w{20,40})(\..+)/, '$2');
 
             if(Object.keys(this.cache).length) {
               let old = this.cache[original];
