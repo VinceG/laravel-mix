@@ -140,11 +140,15 @@ class File {
      * @param {string} hash
      */
     versionedPath(hash) {
-        if (! hash) hash = md5(this.read());
+        // if (! hash) hash = md5(this.read());
+        hash = this.hash(md5(this.read()));
 
         return this.parsePath().hashedPath.replace('[hash]', hash);
     }
 
+    hash(hash) {
+        return options.hash !== undefined && options.hash != '' ? options.hash : hash;
+    }
 
     /**
      * Parse the file path into segments.
@@ -155,10 +159,10 @@ class File {
         return {
             path: this.file,
             pathWithoutExt: path.join(outputSegments.dir, `${outputSegments.name}`),
-            hashedPath: path.join(outputSegments.dir, `${outputSegments.name}.[hash]${outputSegments.ext}`),
+            hashedPath: path.join(outputSegments.dir, `${outputSegments.name}.${this.hash('[hash]')}${outputSegments.ext}`),
             base: outputSegments.dir,
             file: outputSegments.base,
-            hashedFile: `${outputSegments.name}.[hash]${outputSegments.ext}`,
+            hashedFile: `${outputSegments.name}.${this.hash('[hash]')}${outputSegments.ext}`,
             name: outputSegments.name,
             isDir: ! outputSegments.ext,
             ext: outputSegments.ext
