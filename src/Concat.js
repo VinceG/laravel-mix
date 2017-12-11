@@ -76,8 +76,8 @@ class Concat {
         // If file versioning is enabled, then we'll
         // rename the output file to apply a hash.
         if (global.options.versioning) {
-            let versionedPath = File.find(files.outputOriginal)
-                .versionedPath(md5(mergedFileContents));
+            let hash = this.hash(md5(mergedFileContents));
+            let versionedPath = File.find(files.outputOriginal).versionedPath(hash);
 
             files.output = output.rename(versionedPath).file;
         }
@@ -89,6 +89,10 @@ class Concat {
         // We'll now fire an event, so that the Manifest class
         // can be refreshed to reflect these new files.
         global.events.fire('combined', files);
+    }
+
+    hash(hash) {
+        return global.options.hash !== undefined && global.options.hash != '' ? global.options.hash : hash;
     }
 
 

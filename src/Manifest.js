@@ -68,7 +68,7 @@ class Manifest {
             [], values(stats.assetsByChunkName)
         );
 
-        flattenedPaths.forEach(path => {
+        each(flattenedPaths, path => {
             path = this.preparePath(path);
 
             if (! path.startsWith('/')) path = ('/'+path);
@@ -99,7 +99,7 @@ class Manifest {
         let output = this.preparePath(toCombine.output);
 
         this.manifest[
-            output.replace(/\.(\w{32})(\..+)/, '$2')
+            output.replace(/\.(\w{32,40})(\..+)/, '$2')
         ] = output;
 
         this.refresh();

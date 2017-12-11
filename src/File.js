@@ -128,7 +128,7 @@ class File {
     version() {
         let contents = this.read();
 
-        let versionedPath = this.versionedPath(md5(contents));
+        let versionedPath = this.versionedPath(this.hash(md5(contents)));
 
         return new File(versionedPath).write(contents);
     }
@@ -141,9 +141,14 @@ class File {
      */
     versionedPath(hash) {
         // if (! hash) hash = md5(this.read());
-        hash = this.hash(md5(this.read()));
+        //hash = this.hash(md5(this.read()));
+        let newHash = this.hash(hash);
 
-        return this.parsePath().hashedPath.replace('[hash]', hash);
+        if(!newHash) {
+            newHash = md5(this.read());
+        }
+
+        return this.parsePath().hashedPath.replace('[hash]', newHash);
     }
 
     hash(hash) {
