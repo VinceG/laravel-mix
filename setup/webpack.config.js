@@ -3,6 +3,7 @@ let glob = require('glob');
 let webpack = require('webpack');
 let Mix = require('laravel-mix').config;
 let webpackPlugins = require('laravel-mix').plugins;
+let UglifyJSPlugin = require('uglifyjs-webpack-plugin');
 
 /*
  |--------------------------------------------------------------------------
@@ -397,7 +398,8 @@ if (Mix.inProduction) {
 
     if (Mix.options.uglify) {
         plugins.push(
-            new webpack.optimize.UglifyJsPlugin(Mix.options.uglify)
+            //new webpack.optimize.UglifyJsPlugin(Mix.options.uglify)
+            new UglifyJSPlugin(Mix.options.uglify)
         );
     }
 }
