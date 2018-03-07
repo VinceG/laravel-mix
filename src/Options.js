@@ -109,13 +109,13 @@ module.exports = {
      *
      * @type {Object}
      */
-    uglify: {
+    /*uglify: {
         sourceMap: true,
         compress: {
             warnings: false,
             drop_console: true
         }
-    },
+    },*/
 
 
     /**
